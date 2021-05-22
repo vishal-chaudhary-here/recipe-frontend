@@ -1,0 +1,89 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="recipe-heading" data-cy="RecipeCreateUpdateHeading">Create or edit a Recipe</h2>
+
+      <div>
+        <div *ngIf="alert.message!==''" class="alert alert-danger d-flex align-items-center" role="alert">
+          <div>
+            {{ alert.message }}
+          </div>
+        </div>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id"
+            [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" 
+            data-cy="name" formControlName="name" [readonly]="recipe!.name"/>
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_isVegetarian">Is Vegetarian</label>
+          <input type="checkbox" class="form-check" name="isVegetarian" id="field_isVegetarian" data-cy="isVegetarian"
+            formControlName="isVegetarian" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_noOfPeopleCanEat">No Of People Can Eat</label>
+          <input type="number" class="form-control" name="noOfPeopleCanEat" id="field_noOfPeopleCanEat"
+            data-cy="noOfPeopleCanEat" formControlName="noOfPeopleCanEat" min="1" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_ingredients">Ingredients (Comma Separated)</label>
+          <input type="text" class="form-control" name="ingredients" id="field_ingredients" data-cy="ingredients"
+            formControlName="ingredients" />
+        </div>
+
+        <div class="form-group">
+          <div>
+            <label class="form-control-label" for="field_instructions">Instructions</label>
+            <div class="input-group">
+              <input type="text" class="form-control" formControlName="instruction" placeholder="Instruction's"
+                aria-label="Instruction add">
+              <button class="btn btn-outline-secondary" type="button" (click)="addInstruction()">Add
+                Instruction</button>
+            </div>
+          </div>
+          <div>
+            <ul class="list-group" *ngFor="let instruction of instructions; let i = index">
+              <li class="list-group-item">{{i + 1}}-{{instruction.stepDescription}}
+                <button type="button" class="btn-close" aria-label="Close" (click)="removeInstruction(i)"></button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_creationDateTime">Creation Date Time</label>
+          <div class="d-flex">
+            <input id="field_creationDateTime" data-cy="creationDateTime" type="datetime-local" class="form-control"
+              name="creationDateTime" formControlName="creationDateTime" placeholder="YYYY-MM-DD HH:mm"
+              [readonly]="true" />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <span>Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary">
+          <span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

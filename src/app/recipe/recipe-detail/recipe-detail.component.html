@@ -1,0 +1,63 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+      <div *ngIf="recipe">
+        <h2 data-cy="recipeDetailsHeading"><span>Recipe</span></h2>
+  
+        <hr />
+  
+        <dl class="row-md">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ recipe.id }}</span>
+          </dd>
+          <dt><span>Name</span></dt>
+          <dd>
+            <span>{{ recipe.name }}</span>
+          </dd>
+          <dt><span>Vegetarian</span></dt>
+          <dd>
+            <span>{{ recipe.isVegetarian }}</span>
+          </dd>
+          <dt><span>Creation Date</span></dt>
+          <dd>
+            <span>{{ recipe.creationDateTime | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>No Of People can Eat</span></dt>
+          <dd>
+            <span>{{ recipe.noOfPeopleCanEat }}</span>
+          </dd>
+          <dt><span>Cooking Ingredients</span></dt>
+          <dd>
+            <div>
+                <ul class="list-group" *ngFor="let instruction of recipe.ingredients; let i = index">
+                  <li class="list-group-item">{{i + 1}}-{{instruction}}
+                  </li>
+                </ul>
+            </div>
+          </dd>
+
+          <dt><span>Cooking Instructions</span></dt>
+          <dd>
+            <div>
+                <ul class="list-group" *ngFor="let instruction of recipe.cookingInstructions; let i = index">
+                  <li class="list-group-item">{{i + 1}}-{{instruction.stepDescription}}
+                  </li>
+                </ul>
+            </div>
+          </dd>
+        </dl>
+  
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <span>Back</span>
+        </button>
+  
+        <button type="button" 
+            [routerLink]="['/recipe', recipe.id, 'edit']" 
+            [queryParams]="{fields: 'id,name,creationDateTime,isVegetarian,noOfPeopleCanEat,cookingInstructions,ingredients'}"
+            class="btn btn-primary">
+          <span>Edit</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
