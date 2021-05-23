@@ -6,6 +6,12 @@
     </div>
   
     <div class="modal-body">
+      <div *ngIf="alert.message!==''" class="alert alert-danger d-flex align-items-center" role="alert">
+        <div>
+          {{ alert.message }}
+        </div>
+        <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
+      </div>
   
       <p id="delete-recipe-heading">Are you sure you want to delete this Recipe?</p>
     </div>

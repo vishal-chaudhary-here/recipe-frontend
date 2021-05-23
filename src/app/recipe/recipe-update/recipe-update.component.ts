@@ -142,4 +142,8 @@ export class RecipeUpdateComponent implements OnInit {
     this.instructions.splice(stepNo, 1);
   }
 
+  closeAlert() {
+    this.alert.message = '';
+  }
+
 }
